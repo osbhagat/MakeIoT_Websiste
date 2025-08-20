@@ -91,6 +91,70 @@
   </div>
 </nav>
 
+
+  <script>
+  // Function to toggle the nav menu
+  function toggleMenu() {
+    document.getElementById('navSection').classList.toggle('show');
+  }
+
+  // Event listener to close the nav menu when clicked outside
+  document.addEventListener('click', function(event) {
+    const navSection = document.getElementById('navSection');
+    const menuToggle = document.querySelector('.menu-toggle');
+    
+    // Close the menu if click is outside the nav-section or menu-toggle
+    if (!navSection.contains(event.target) && !menuToggle.contains(event.target)) {
+      navSection.classList.remove('show');
+    }
+  });
+</script>
+
+<script>
+  // Get nav items and the nav container
+  const navLinks = document.querySelectorAll('.nav-menu li a');
+  const navSection = document.querySelector('.nav-section');
+
+  function closeMenu() {
+    navSection.classList.remove('show');
+  }
+
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+
+    // Only apply scroll for internal section links
+    if (href.startsWith('#')) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const targetId = href.substring(1); // remove '#'
+        const targetSection = document.getElementById(targetId);
+
+        if (targetSection) {
+          targetSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+
+        closeMenu(); // Close mobile nav
+      });
+    }
+    // Skip if it's an external link (e.g., Internship Google Form)
+  });
+
+  // ----------------------------
+  // Request a Callback Button Logic
+  // ----------------------------
+
+  callbackBtn.addEventListener('click', (e) => {
+  e.stopPropagation(); // Prevent click from bubbling to window
+  callbackForm.classList.add('active');
+  closeMenu(); // ✅ Close the nav menu if open
+});
+</script>
+
+
 <!-- Callback Form -->
 <div class="callback-form" id="callbackForm" role="dialog" aria-labelledby="callbackFormTitle" aria-hidden="true">
   <span class="close-btn" id="closeForm" aria-label="Close form">&times;</span>
@@ -741,4 +805,5 @@ setInterval(showNextImage, 2000);
 
 
 </html>
+
 
